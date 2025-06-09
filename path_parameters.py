@@ -48,3 +48,6 @@ def add_temp(temple : Temp):
 
 # might get conflict with "/temple/shiva"
 # so it should be need to be put before dynamic route .. bascially need to be handled with care 
+
+
+# similarly we have querry parameters .. querry parameter is given after "?" sign ... read it a bit about in docs .. it will be easy
