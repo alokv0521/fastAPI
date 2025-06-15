@@ -21,7 +21,7 @@ home_route_info={"messge": "welcome to sacred place of temples and we are"}
 def read_root():
     return home_route_info
 
-# note: function name doesn't matter ..only teh thing that matter is the decorator 
+# note: function name doesn't matter ..only the thing that matter is the decorator 
 
 # here routs are called path in some frameworks these are called api endpoints
 
