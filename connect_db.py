@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, status
+from fastapi import FastAPI, Depends, status, HTTPException
 from schemas import item
 from sqlalchemy.orm import Session
 from models import Blog
@@ -29,10 +29,19 @@ def get_All(db :Session=Depends(get_db)):
     blogs=db.query(Blog).all()
     return blogs
 
-@app.get("/blog/{id}")
+@app.get("/blog/{id}", status_code=status.HTTP_200_OK)
 def retrieve(id:int, db :Session=Depends(get_db)):
     blog= db.query(Blog).filter(Blog.id==id).first()
-    return blog
+    if blog :
+        return blog
+    else :
+        # status_code=status.HTTP_100_CONTINUE
+        # return {f"there is no blog containing for the id: {id}"}
+        #you will need to raise a HTTPSException() in order to put custom status code when blog not found 
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"there is no blog containing for the id: {id}"
+        )
 
 #problem 
 # here  the problem is that .. once we create the blog instance , we get response code 200 that should be 201 so we are fixing it for now 
