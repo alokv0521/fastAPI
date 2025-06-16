@@ -92,5 +92,12 @@ def user(request:use, db :Session=Depends(get_db)):
     db.refresh(new_user)
     return(new_user)
 
-
+@app.get("/user/{id}", response_model=user_incrypted, status_code=status.HTTP_200_OK)
+def retrieve_user(id:int, db :Session=Depends(get_db)):
+    new_user=db.query(User).filter(User.id==id).first()
+    if new_user:
+        return new_user
+    else:
+        raise HTTPException( status_code=status.HTTP_404_NOT_FOUND, detail=f"the user with the id:{id} is not found")
+    
 
