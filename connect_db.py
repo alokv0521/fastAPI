@@ -54,6 +54,16 @@ def astroid_destroyer(id, db :Session=Depends(get_db)):
         db.query(Blog).filter(Blog.id==id).delete(synchronize_session=False) # got deleted but can be seen on get as changes are not commited 
     db.commit()
     raise HTTPException( status_code=status.HTTP_200_OK, detail= f"blog with the id:{id} got suscessfully deleted 🤗")
+
+
+
+#put method , this is a bulk method , means if two data having same email ... they both will be updated  
+@app.put("/blog/{id}", status_code=status.HTTP_202_ACCEPTED)
+def update(id,request:item, db :Session=Depends(get_db)):
+    db.query(Blog).filter(Blog.id==id).update({"title":request.title, "body":request.body}, synchronize_session=False )
+    db.commit()
+    return {"suscessfully updated the record having id: {id}"}
+
         
 
 
