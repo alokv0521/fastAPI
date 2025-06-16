@@ -1,13 +1,15 @@
 from fastapi import FastAPI, Depends, status, HTTPException
-from schemas import item ,show , getAll
+from schemas import item ,show , getAll, use, user_incrypted
 from sqlalchemy.orm import Session
-from models import Blog
+from models import Blog, User
 from database import engine, Base, sessionlocal
 from typing import List
+from hash import hash
 
 
 
 app=FastAPI()
+
 
 Base.metadata.create_all(engine)
 
@@ -69,3 +71,33 @@ def update(id,request:item, db :Session=Depends(get_db)):
 # siply put the parameter reponse_model=model name in decorator 
 # and that model will be none other than pydantic schema hence we need to decalre one more schema in the original schema
 # here we have two types of model , pydantic and sqlalchamy , sql one is called model whileas pydantic is called schema ,.. hence here we mean  response schema  by response_model
+
+# now we are creating user using post method
+# @app.post("/user")
+# def user(request:use, db :Session=Depends(get_db)):
+#     # hash_pass=pwd_context.hash(request.password)
+#     new_user=User(name=request.name, email=request.email, password=hash.bcrypt(request.password))
+#     db.add(new_user)
+#     db.commit()
+#     db.refresh(new_user)
+#     return(new_user)
+
+# now the above code is returning the pass as response that we don't want 
+@app.post("/user", response_model=user_incrypted)
+def user(request:use, db :Session=Depends(get_db)):
+    # hash_pass=pwd_context.hash(request.password)
+    new_user=User(name=request.name, email=request.email, password=hash.bcrypt(request.password))
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+    return(new_user)
+
+@app.get("/user/{id}", response_model=user_incrypted, status_code=status.HTTP_200_OK)
+def retrieve_user(id:int, db :Session=Depends(get_db)):
+    new_user=db.query(User).filter(User.id==id).first()
+    if new_user:
+        return new_user
+    else:
+        raise HTTPException( status_code=status.HTTP_404_NOT_FOUND, detail=f"the user with the id:{id} is not found")
+    
+

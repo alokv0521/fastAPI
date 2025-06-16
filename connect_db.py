@@ -29,7 +29,7 @@ def get_All(db :Session=Depends(get_db)):
     blogs=db.query(Blog).all()
     return blogs
 
-@app.get("/blog/{id}", status_code=status.HTTP_200_OK, response_model=)
+@app.get("/blog/{id}", status_code=status.HTTP_200_OK,)
 def retrieve(id:int, db :Session=Depends(get_db)):
     blog= db.query(Blog).filter(Blog.id==id).first()
     if blog :

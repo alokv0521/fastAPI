@@ -12,3 +12,11 @@ class Blog (Base):
 
 
 # now we have created this model ... so how we can use this model 
+
+class User(Base):
+    __tablename__="User"
+
+    id=Column(Integer, primary_key=True, index=True)
+    name=Column(String)
+    email=Column(String)
+    password=Column(String)
