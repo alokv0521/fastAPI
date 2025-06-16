@@ -18,3 +18,8 @@ class getAll(BaseModel):
           orm_mode=True
 
 
+class use(BaseModel):
+     name:str
+     email:str
+     password:str
+

@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, status, HTTPException
-from schemas import item ,show , getAll
+from schemas import item ,show , getAll, use
 from sqlalchemy.orm import Session
-from models import Blog
+from models import Blog, User
 from database import engine, Base, sessionlocal
 from typing import List
 
@@ -69,3 +69,14 @@ def update(id,request:item, db :Session=Depends(get_db)):
 # siply put the parameter reponse_model=model name in decorator 
 # and that model will be none other than pydantic schema hence we need to decalre one more schema in the original schema
 # here we have two types of model , pydantic and sqlalchamy , sql one is called model whileas pydantic is called schema ,.. hence here we mean  response schema  by response_model
+
+# now we are creating user using post method
+@app.post("/user")
+def user(request:use, db :Session=Depends(get_db)):
+    new_user=User(name=request.name, email=request.email, password=request.password)
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+    return(new_user)
+
+
