@@ -4,10 +4,12 @@ from sqlalchemy.orm import Session
 from models import Blog, User
 from database import engine, Base, sessionlocal
 from typing import List
+from hash import hash
 
 
 
 app=FastAPI()
+
 
 Base.metadata.create_all(engine)
 
@@ -73,7 +75,8 @@ def update(id,request:item, db :Session=Depends(get_db)):
 # now we are creating user using post method
 @app.post("/user")
 def user(request:use, db :Session=Depends(get_db)):
-    new_user=User(name=request.name, email=request.email, password=request.password)
+    # hash_pass=pwd_context.hash(request.password)
+    new_user=User(name=request.name, email=request.email, password=hash.bcrypt(request.password))
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
