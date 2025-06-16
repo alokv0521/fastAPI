@@ -43,6 +43,22 @@ def retrieve(id:int, db :Session=Depends(get_db)):
             detail=f"there is no blog containing for the id: {id}"
         )
 
+
+@app.delete("/blog/{id}")
+def astroid_destroyer(id, db :Session=Depends(get_db)):
+
+    blog = db.query(Blog).filter(Blog.id==id).first()
+    if not blog :
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"the blog with the id: {id} not exist ")
+    else:
+        db.query(Blog).filter(Blog.id==id).delete(synchronize_session=False) # got deleted but can be seen on get as changes are not commited 
+    db.commit()
+    raise HTTPException( status_code=status.HTTP_200_OK, detail= f"blog with the id:{id} got suscessfully deleted 🤗")
+        
+
+
+    
+
 #problem 
 # here  the problem is that .. once we create the blog instance , we get response code 200 that should be 201 so we are fixing it for now 
 #solution:
