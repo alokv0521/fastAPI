@@ -6,9 +6,12 @@ from database import engine, Base
 from typing import List
 from hash import hash
 
-nilesh=APIRouter()
+nilesh=APIRouter(
+    prefix="/user",
+    tags=["Users"]
+)
 
-@nilesh.post("/user", response_model=user_incrypted, tags=["User"])
+@nilesh.post("/", response_model=user_incrypted)
 def user(request:use, db :Session=Depends(get_db)):
     # hash_pass=pwd_context.hash(request.password)
     new_user=User(name=request.name, email=request.email, password=hash.bcrypt(request.password))
@@ -17,7 +20,7 @@ def user(request:use, db :Session=Depends(get_db)):
     db.refresh(new_user)
     return(new_user)
 
-@nilesh.get("/user/{id}", response_model=user_incrypted, status_code=status.HTTP_200_OK, tags=["User"])
+@nilesh.get("/{id}", response_model=user_incrypted, status_code=status.HTTP_200_OK)
 def retrieve_user(id:int, db :Session=Depends(get_db)):
     new_user=db.query(User).filter(User.id==id).first()
     if new_user:
