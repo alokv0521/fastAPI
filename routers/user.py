@@ -11,7 +11,7 @@ nilesh=APIRouter(
 
 @nilesh.post("/", response_model=user_incrypted)
 def user(request:use, db :Session=Depends(get_db)):
-    return user_fun.put_user(id, db)
+    return user_fun.put_user(request, db)
     
 
 

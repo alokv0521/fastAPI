@@ -23,9 +23,13 @@ class use(BaseModel):
      email:str
      password:str
 
-class user_incrypted(BaseModel):
-     name:str
-     email:str
+class user_incrypted(use):
+     # name:str
+     # email:str
 
      class config():
           orm_mode=True
+
+class login(BaseModel):
+     username:str
+     password:str

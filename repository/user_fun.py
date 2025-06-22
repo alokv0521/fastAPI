@@ -2,11 +2,11 @@ from schemas import use
 from sqlalchemy.orm import Session
 from fastapi import Depends, HTTPException, status
 from models import get_db, User
-
+from hash import Hash
 
 
 def put_user(request:use, db :Session=Depends(get_db)):
-    new_user=User(name=request.name, email=request.email, password=hash.bcrypt(request.password))
+    new_user=User(name=request.name, email=request.email, password=Hash.bcrypt(request.password))
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
