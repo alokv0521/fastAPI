@@ -1,14 +1,16 @@
 from fastapi import FastAPI
 from database import engine, Base
-from routers import user, blog
+from routers import user, blog, authentication
 from fastapi.middleware.cors import CORSMiddleware
 
 app=FastAPI()
 
 Base.metadata.create_all(engine)
 
+app.include_router(authentication.auth)
 app.include_router(blog.alok)
 app.include_router(user.nilesh)
+
 
 
 # @app.post("/blog", status_code=status.HTTP_201_CREATED, tags=["General"]) 
