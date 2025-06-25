@@ -52,4 +52,4 @@ source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 
 # 4. Run a specific file 
-uvicorn path_parameters:app --reload
+uvicorn response_model:app --reload
