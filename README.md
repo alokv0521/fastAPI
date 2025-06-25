@@ -28,7 +28,7 @@ A fully functional and secure blog management REST API built with FastAPI, featu
 
 ---
 
-<pre lang="markdown"> ## 📂 Project Structure ``` . ├── main.py # FastAPI app entry point ├── database.py # DB connection setup ├── models/ # SQLAlchemy models │ ├── blog.py │ └── user.py ├── schemas/ # Pydantic schemas │ ├── blog.py │ └── user.py ├── routers/ # API routers │ ├── auth.py │ ├── blog.py │ └── user.py ├── hashing.py # Password hashing logic ├── token.py # JWT token generation/verification ├── requirements.txt # Dependencies └── README.md ``` </pre>
+## 📂 Project Structure ``` . ├── main.py # FastAPI app entry point ├── database.py # DB connection setup ├── models/ # SQLAlchemy models │ ├── blog.py │ └── user.py ├── schemas/ # Pydantic schemas │ ├── blog.py │ └── user.py ├── routers/ # API routers │ ├── auth.py │ ├── blog.py │ └── user.py ├── hashing.py # Password hashing logic ├── token.py # JWT token generation/verification ├── requirements.txt # Dependencies └── README.md ``` 
 
 
 ##🧪 Future Improvements
