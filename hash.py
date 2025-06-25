@@ -9,7 +9,7 @@ class Hash():
     @staticmethod
     def bcrypt(password:str):
         return pwd_context.hash(password)
-    
+    # @staticmethod
     def verify(plain_pass, hashed_pass):
         return pwd_context.verify(plain_pass, hashed_pass)
 
